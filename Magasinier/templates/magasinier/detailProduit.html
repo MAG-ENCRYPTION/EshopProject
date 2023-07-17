@@ -1,0 +1,41 @@
+{% extends 'DashbordMagasinier.html' %}
+{% load static %}
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/detail.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <main>
+        <section id="contenu">
+            <header id="detail"> <img src="{% static 'images/user.png' %}" alt="stuiiip"> DETAIL PRODUIT</header>
+            <br>
+            <br>
+            <div class="ppBox">
+                <div class="pimage"><img src=""></div>
+            </div>
+            <div class="formulaire">
+                <div class="signup">
+                    <form>
+                        <input type="text" name="num" placeholder="Code" required id="nom">
+                        <input type="text" name="txt" placeholder="Nom" required>
+                        <input type="number" name="num2" placeholder="Prix" required>
+                        <input type="text" name="txt" placeholder="Categorie" required>
+                        <input type="text" name="txt" placeholder="Code Fournisseur" required>
+                        <input type="text" name="txt" placeholder="Description" required id="Description">
+                        <button type="submit" id="submitbtn"><a href="#" class="boutonOne"> Modifier
+                            </a></button>
+                        <button type="submit" id="submitbtn"><a href="#" class="boutonOne"> Annuler
+                            </a></button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

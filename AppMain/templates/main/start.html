@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <title>Ma page web avec des boutons</title>
+    <style>
+      /* Style de base pour la page */
+      body {
+          background-image: url("{% static 'img/boutique1.png' %}");
+          background-repeat: no-repeat;
+          background-size: cover;
+        margin: 0;
+        padding: 0;
+        background-color: #f2f2f2;
+        font-family: Arial, sans-serif;
+      }
+
+      /* Style pour le message */
+      h1{
+        font-family: "Curlz MT", sans-serif;
+        margin-top: 50px;
+          /* background-color: rgba(150, 150, 150, 0.62); */
+        font-size: 3rem;
+        color: #ffffff;
+        text-align: center;
+      }
+      .containers > h1{
+          padding: 80px 80px 80px 80px;
+        margin-top: 0;
+        font-size: 5rem;
+        color: #ffffff;
+        text-align: center;
+      }
+
+      /* Style pour les boutons */
+      .buttons {
+        margin-top: 50px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .button {
+        display: inline-block;
+        margin: 10px;
+        padding: 20px 40px;
+        min-width: 200px;
+        border-radius: 5px;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .button:hover {
+        transform: scale(1.1);
+      }
+
+      /* Couleurs pour les boutons */
+      .red {
+        background-color: #ff4d4d;
+      }
+
+      .orange {
+        background-color: #d95c00;
+      }
+
+      .green {
+        background-color: #2e8b57;
+      }
+
+      .blue {
+        background-color: #4d4dff;
+      }
+
+      /* Espacement équitable entre les boutons */
+      .buttons > *:not(:last-child) {
+        margin-bottom: calc(58vh / 6 - 40px);
+      }
+     .containers {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px; /* pour centrer l'image verticalement */
+}
+.logo {
+  max-width: 100%;
+  max-height: 100%;
+    width: 200px;
+    height: 200px;
+    margin-top: 5px;
+}
+    </style>
+  </head>
+  <body>
+    <div class="containers">
+    <img src="{% static 'img/eshop.png' %}" alt="Logo" class="logo">
+    <h1>BIENVENUE SUR E-SHOP</h1>
+    </div>
+    {% block containt %}
+    <h1>Veuillez choisir votre Statut</h1>
+    <div class="buttons">
+      <a href="{% url 'authenticate' %}" class="button red">Caissier</a>
+      <a href="{% url 'authenticate' %}" class="button orange">Magasinier</a>
+      <a href="#" class="button green">Web Gestionnaire</a>
+      <a href="#" class="button blue">Tontine ou autres</a>
+      <a href="#" class="button" style="background-color: #333333;">Super Admin</a>
+    </div>
+  {% endblock containt %}
+  </body>
+</html>

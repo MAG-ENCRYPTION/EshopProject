@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Eshop-Caisse</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/Caisse.css' %}">
+    <style>
+    .container > h1{
+    font-family: "Curlz MT",sans-serif;
+    font-size: 4rem;
+    }
+    </style>
+    {% block css %}
+    {% endblock css %}
+</head>
+<body>
+    <header>
+        <div class="nom">
+            <img src="{% static 'images/user.png' %}" alt="user">
+            <div class="title">{{ gest }}</div>
+        </div>
+        <div class="option">
+            <div class="decon"><a href="{% url 'authenticate' %}" class="deconnecter">Deconnexion</a></div>
+            <img src="{% static 'images/logout.png' %}" alt="door">
+        </div>
+    </header>
+    <div class="navig">
+        <div class="factu">
+            <img src="{% static 'images/accueil.png' %}" alt="facture">
+            <div class="title"><a href="{% url 'facturer' %}">Facturation</a></div>
+        </div>
+        <div class="categ">
+            <img src="{% static 'images/categories.png' %}" alt="categorie">
+            <div class="title"><a href="{% url 'AllCategoCaisse' %}">Catégorie</a></div>
+        </div>
+        <div class="prod">
+            <img src="{% static 'images/products.png' %}" alt="production">
+            <div class="title"><a href="{% url 'produitsCaisse' %}">Production</a></div>
+        </div>
+        <div class="prop">
+            <img src="{% static 'images/about.png' %}" alt="propos">
+            <div class="title"><a href="#">Propos</a></div>
+        </div>
+    </div>
+    {% block content1 %}
+        <div class="container">
+		<h1>Dashboard Caissière</h1>
+	</div>
+    {% endblock content1 %}
+</body>
+</html>

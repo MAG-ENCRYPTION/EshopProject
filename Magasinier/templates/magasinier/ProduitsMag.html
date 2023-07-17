@@ -1,0 +1,275 @@
+{% extends 'DashbordMagasinier.html' %}
+{% load static %}
+{% block content1 %}
+    {% block css %}
+        <style>
+        .pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination-link {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 0 5px;
+  background-color: #fff;
+  border: 2px solid #000;
+  color: #000;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 50px;
+  transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  position: relative;
+  z-index: 1;
+}
+
+.pagination-link:hover {
+  transform: translateY(-10px);
+  background-color: #000;
+  color: #fff;
+}
+
+.pagination-link.active {
+  background-color: #000;
+  color: #fff;
+}
+
+.pagination-link.active:hover {
+  transform: none;
+}
+
+.pagination-link:before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background-color: #000;
+  z-index: -1;
+  transition: height 0.3s ease-in-out;
+}
+
+.pagination-link:hover:before {
+  height: 100%;
+}
+
+        </style>
+        <style>
+         /* Popup */
+    .popup {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+    }
+    #add-button{
+        border: none;
+        background: none;
+    }
+    #add-button :hover{
+        transform: scale(1.1);
+    }
+    .popup-content {
+      background-color: #fefefe;
+      margin: 10% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 500px;
+    }
+    .close {
+      align-self: center;
+      width: 30px;
+      height: 30px;
+      color: black;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+      color: whitesmoke;
+      background-color: red;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    label {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    input[type=text] {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      resize: none;
+    }
+    button[type=submit] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 18px;
+      margin-top: 10px;
+    }
+    button[type=button] {
+      background-color: #ec324e;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 18px;
+      margin-top: 10px;
+    }
+    button[type=submit]:hover, button[type=button]:hover {
+      transform: scale(1.1);
+    }
+
+    .btn{
+        display: inline;
+    }
+    #logo{
+        transform: translateX(50%) scale(1);
+        width: 250px;
+        height: 250px;
+    }
+
+    .formPara {
+    display: flex;
+}
+
+.formPara input {
+    flex: 1;
+}
+
+.formPara button {
+    flex: 0 0 4em;
+}
+
+        </style>
+    {% endblock css %}
+<div class="menu">
+        <div class="nav"><a href="{% url 'dashbordmagasinier' %}" class="acc"> Accueil</a>  >  <a href="{% url 'AllCategoMAG' %}" class="prod"> Categories > </a>  <a href="" class="prod"> Produits </a>  >  </div>
+        <div class="categ">{{ categorie.nomcat }}</div>
+    </div>
+    <div class="filter">
+        <div class="page">
+            <button class="print">Catalogue</button>
+            <button class="refresh">Rafraîchir</button>
+        </div>
+        <div class="param">
+            <button class="qte">Quantité</button>
+            <button class="fourn">Code de Fournisseur</button>
+            <input type="text" placeholder="Entrer Nom Catégorie"><button class="prod"></button>
+            <a href="#"><img src="{% static 'images/search.png' %}" alt="search"></a>
+        </div>
+        <div class="formPara">
+                    <form method="post">
+                        {% csrf_token %}
+                    <input class="qte" type="text" placeholder="Quantité">
+                    <input type="text" class="fourn" placeholder="Code Arrivage">
+                    <input type="text" class="prod" placeholder="Code Produit">
+                    <button type="submit"><img src="{% static 'images/search.png' %}" alt="search"></button>
+                    </form>
+        </div>
+    </div>
+    <div class="inv">
+    {% for produit in produits %}
+        <div class="prod">
+            <div class="num"> {{ produit.codepro }}</div>
+            <div class="num"> {{ produit.nompro}}</div>
+            <img src="http://boutiquebambino.shop/eshop/productImages/{{ produit.codepro }}/{{ produit.photo.lienphoto }}" alt="{{ produit.photo.lienphoto }}">
+            <div class="bottom">
+                <div class="qte">{{ produit.qte }}</div>
+                <div class="qte">{{ produit.prix }} FCFA </div>
+                <a href="" id="add-button"><img src="{% static 'images/search.png' %}" alt="search"></a>
+            </div>
+        </div>
+        <div id="popup" class="popup">
+    <div class="popup-content">
+      <span class="close">&times;</span>
+        <img id="logo" src="{% static 'img/eshop.png' %}" alt="">
+      <h2><A>E-SHOP</A></h2>
+      <form>
+          {% csrf_token %}
+        <label for="name">CODE DU PRODUIT : </label>
+        <input type="text" id="name" name="name"><br><br>
+        <label for="name">NOM DU PRODUIT : </label>
+        <input type="text" id="name" name="name"><br><br>
+        <label for="name">DESCRIPTION : </label>
+        <input type="text" id="name" name="name"><br><br>
+        <label for="name">AGE : </label>
+        <input type="text" id="name" name="name"><br><br>
+          <div class="btn">
+        <button type="submit" class="add">Ajouter</button>
+        <button type="button" class="cancel">Annuler</button>
+          </div>
+      </form>
+    </div>
+  </div>
+    {% endfor %}
+    </div>
+    {% if produits %}
+<div class="pagination">
+  {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}" class="pagination-link">Précédent</a>
+  {% endif %}
+  <span class="pagination-link current-page">{{ page_obj.number }}</span>
+  {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}" class="pagination-link">Suivant</a>
+  {% endif %}
+</div>
+{% endif %}
+    {% block javascript %}
+  <script>
+    // Récupération des éléments du DOM
+    const popup = document.getElementById("popup");
+    const addButton = document.getElementById("add-button");
+    const closeButton = document.querySelector(".close");
+    const cancelButton = document.querySelector(".cancel");
+    const form = document.querySelector("form");
+
+    // Fonction pour afficher le popup
+    function showPopup() {
+      popup.style.display = "block";
+    }
+
+    // Fonction pour masquer le popup
+    function hidePopup() {
+      popup.style.display = "none";
+    }
+
+    // Événements pour afficher/masquer le popup
+    addButton.addEventListener("click", showPopup);
+    closeButton.addEventListener("click", hidePopup);
+    cancelButton.addEventListener("click", hidePopup);
+
+    // Événement pour soumettre le formulaire
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+      const name = document.getElementById("name").value;
+      console.log("Nom ajouté : " + name);
+      hidePopup();
+    });
+  </script>
+        {% endblock javascript %}
+{% endblock content1 %}

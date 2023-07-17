@@ -1,0 +1,142 @@
+{% extends 'DashbordMagasinier.html' %}
+{% load static %}
+{% block content1 %}
+<div class="menu">
+        <div class="nav"><a href="{% url 'dashbordcaisse' %}" class="acc"> Accueil</a>  >  <a href="#" class="prod"> Produits </a>  >  </div>
+        <div class="categ">Toutes les Produits</div>
+    </div>
+    <div class="filter">
+        <div class="page">
+            <button class="print">Catalogue</button>
+            <button class="refresh">Rafraîchir</button>
+        </div>
+        <div class="param">
+            <button class="qte">Quantité</button>
+            <button class="fourn">Code de Fournisseur</button>
+            <input type="text" placeholder="Entrer Nom Catégorie"><button class="prod"></button>
+            <a href="#"><img src="{% static 'images/search.png' %}" alt="search"></a>
+        </div>
+        <form method="get" class='searching'>
+          <input name="codefour" type="text" id="codefour" maxlength=6 placeholder="Codefour du produit" value="{{ codefour }}">
+          <input name="quanti" type="text" id="quanti" maxlength=6 placeholder="quanti du produit" value="{{ quanti }}">
+          <input name="code" type="text" id="code" maxlength=6 placeholder="Code du produit" value="{{ code }}">
+          <button class="search" type="submit"><img class="loupe" src="{% static 'images/search.png' %}"></button>
+        </form>
+    </div>
+
+
+
+    </br></br></br></br></br>
+
+    <div class="inv">
+        {% for product in produits %}
+
+        <div class="prod">
+          <div class="num">{{ product.categorie}}</div>
+          <img src="http://boutiquebambino.shop/eshop/productImages/{{ product.code }}/{{ product.photo.lienphoto }}" alt="produit">
+          <div class="bottom">
+            <a href=""><img src="{% static 'images/add.png' %}" alt="plus"></a>
+            <img src="{% static 'images/soustraction.png' %}" alt="moins">
+            <div class="qte" style="width: 150px;">{{ product.quantite }}</div>
+
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal{{ product.code }}" >
+              <img src="{% static 'images/search.png' %}" alt="search">
+            </button>
+          </div>
+        </div>
+
+        <div class="modal fade" id="exampleModal{{ product.code }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Détails du produit</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="details" style="display: flex; flex-direction: row; overflow: scroll;">
+                  {% for ph in product.photos %}
+                  <img id="modal-photo" src="http://boutiquebambino.shop/eshop/productImages/{{ product.code }}/{{ ph.lienphoto }}" alt="produit"style="min-width: 350px; min-height: 350px;">
+                  {% endfor %}
+                </div>
+                <form method="post">
+                  {% csrf_token %}
+                  {{ form.as_p}}
+                  <div class="mb-3">
+                    <label for="{{ product.code }}" class="form-label">Code produit :</label>
+                    <input type="text" class="form-control" id="{{product.code}}" name="{{product.code}}" value="{{ product.code }}" readonly>
+                  </div>
+                  <div class="mb-3">
+                    <label for="product.nom" class="form-label">Nom produit :</label>
+                    <input type="text" class="form-control" id="product.nom" name="product.nom" value="{{ product.nom }}" readonly>
+                  </div>
+                  <div class="mb-3">
+                    <label for="product.prix" class="form-label">Prix :</label>
+                    <input type="text" class="form-control" id="product.prix" name="product.prix" value="{{ product.prix}}" readonly>
+                  </div>
+                  <div class="mb-3">
+                    <label for="product.quantite" class="form-label">quantite :</label>
+                    <input type="text" class="form-control" id="product.quantite" name="product.quantite" value="{{ product.quantite}}" >
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% endfor %}
+      </div>
+
+      <script>
+        const buttons = document.querySelectorAll('.btn-primary');
+        const modalPhoto = document.getElementById('modal-photo');
+
+        buttons.forEach(button => {
+          button.addEventListener('click', () => {
+            const photoUrl = button.dataset.photoUrl;
+            modalPhoto.src = photoUrl;
+          });
+        });
+      </script>
+      <pagination>
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                {% if page_obj.previous_page_number|add:-1 > 1 %}
+                    <a href="?page=1{% if codefour %}&codefour={{ codefour }}{% endif %}{% if quanti %}&quanti={{ quanti }}{% endif %}{% if code %}&code={{ code }}{% endif %}"><button>1</button></a>
+                    ...
+                    <a href="?page={{ page_obj.previous_page_number }}{% if codefour %}&codefour={{ codefour }}{% endif %}{% if quanti %}&quanti={{ quanti }}{% endif %}{% if code %}&code={{ code }}{% endif %}"><button>{{ page_obj.previous_page_number }}</button></a>
+                {% elif page_obj.previous_page_number == 1 %}
+                    <a href="?page=1{% if codefour %}&codefour={{ codefour }}{% endif %}{% if quanti %}&quanti={{ quanti }}{% endif %}{% if code %}&code={{ code }}{% endif %}"><button>1</button></a>
+                {% else %}
+                    <a href="?page=1{% if codefour %}&codefour={{ codefour }}{% endif %}{% if quanti %}&quanti={{ quanti }}{% endif %}{% if code %}&code={{ code }}{% endif %}"><button>1</button></a>
+                    <a href="?page={{ page_obj.previous_page_number }}{% if codefour %}&codefour={{ codefour }}{% endif %}{% if quanti %}&quanti={{ quanti }}{% endif %}{% if code %}&code={{ code }}{% endif %}"><button>{{ page_obj.previous_page_number }}</button></a>
+                {% endif %}
+            {% endif %}
+
+                <span class="current-page">
+                    <b>[{{ page_obj.number }}]</b>
+                </span>
+
+            {% if page_obj.has_next %}
+                {% if page_obj.next_page_number|add:1 < page_obj.paginator.num_pages %}
+                    <a href="?page={{ page_obj.next_page_number }}{% if codefour %}&codefour={{ codefour }}{% endif %}{% if quanti %}&quanti={{ quanti }}{% endif %}{% if code %}&code={{ code }}{% endif %}"><button>{{ page_obj.next_page_number }}</button></a>
+                    ...
+                    <a href="?page={{ page_obj.paginator.num_pages }}{% if codefour %}&codefour={{ codefour }}{% endif %}{% if quanti %}&quanti={{ quanti }}{% endif %}{% if code %}&code={{ code }}{% endif %}"><button>{{ page_obj.paginator.num_pages }}</button></a>
+                {% elif page_obj.next_page_number == page_obj.paginator.num_pages %}
+                    <a href="?page={{ page_obj.paginator.num_pages }}{% if codefour %}&codefour={{ codefour }}{% endif %}{% if quanti %}&quanti={{ quanti }}{% endif %}{% if code %}&code={{ code }}{% endif %}"><button>{{ page_obj.paginator.num_pages }}</button></a>
+                {% else %}
+                    <a href="?page={{ page_obj.next_page_number }}{% if codefour %}&codefour={{ codefour }}{% endif %}{% if quanti %}&quanti={{ quanti }}{% endif %}{% if code %}&code={{ code }}{% endif %}"><button>{{ page_obj.next_page_number }}</button></a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}{% if codefour %}&codefour={{ codefour }}{% endif %}{% if quanti %}&quanti={{ quanti }}{% endif %}{% if code %}&code={{ code }}{% endif %}"><button>{{ page_obj.paginator.num_pages }}</button></a>
+                {% endif %}
+            {% endif %}
+        </span>
+      </pagination>
+
+
+
+
+
+{% endblock content1 %}

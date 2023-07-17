@@ -1,0 +1,104 @@
+{% extends 'DashbordCaissiere.html' %}
+{% load static %}
+{% block content1 %}
+    <!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/facturation.css' %}">
+    <title>Facturation</title>
+</head>
+<body>
+<form method="POST" target="_self" id="form">
+    {% csrf_token %}
+        <div class="col1">
+          <div class="item">
+            <img src="{% static 'images/phone.png'%}" class="icone" alt="tel">
+            <input type="number" name="phone-number" placeholder="téléphone" />
+          </div>
+          <div class="item">
+            <img src="{% static 'images/crayon.png'%}" class="icone" alt="product-code">
+            <input type="number" name="code-prod" placeholder="code-produit" />
+          </div>
+
+          <div class="item">
+            <img src="{% static 'images/soustraction.png'%}" class="icone" alt="remise-icone">
+            <input type="number" name="remise" placeholder="Remise Max=40.0%" />
+          </div>
+        </div>
+        <div class="col2">
+          <div class="item">
+            <label for="mode-paiement">Mode de paiement </label>
+            <select name=" mode-de-paiement" id="mode-paiement">
+              <option value="cash" selected>Cash</option>
+              <option value="gimac-card">Bank Card</option>
+              <option value="momo">MTN Mobile Money</option>
+            </select>
+          </div>
+          <div class="item">
+            <label for="quantity">Quantité</label>
+            <input id="quantity" type="number" name="quantity" placeholder="1" />
+          </div>
+          <div class="item">
+            <label for="stock">Quantité en stock</label>
+            <input id="stock" type="number" name="stock" placeholder="ND" />
+            <img src="{% static 'images/ajouter.png'%}" class="icone" alt="add">
+          </div>
+        </div>
+        <div class="col3">
+            <img src="{{ link }}" alt="None">
+        </div>
+        </div>
+    <button type="submit"> send </button>
+      </form>
+<br>
+<br>
+<section class="section2">
+        <p class="inline">Total(Fcfa):<span class="nd">{{ link }}</span></p>
+        <p class="inline">Net A Payer (Fcfa):<span class="nd">ND</span></p>
+        <p class="inline"><input id = "montantRemis" type ="number" placeholder="Montant remis"></p>
+        <p class="inline">Reliquat:</p>
+</section>
+<br><br>
+      <main>
+        <table>
+         <thead>
+          <tr>
+           <th>Code Produit</th>
+           <th>Prix Unitaire</th>
+           <th>Quantité</th>
+           <th>Sous-Total</th>
+          </tr>
+         </thead>
+         <tbody>
+          <!--{% for produit in produits %}-->
+              <tr>
+               <td>{{ produit.nomPro }}</td>
+               <td>{{ product.codePro }}</td>
+               <td>{ }</td>
+               <td>{ }</td>
+              </tr>
+          <!--{% endfor %}-->
+         </tbody>
+        </table>
+       </main>
+    <br>
+    <div class="ma">
+        <button class="gg">Recette Journalière</button>
+      <div class="ba">
+            <button class="sup">Supprimer</button>
+            <button>Annuler</button>
+            <button>Aperçu</button>
+            <button>Valider</button>
+      </div>
+    </div>
+    <br>
+    <footer>
+        <p>&copy; 2023 Site de vente de vêtements</p>
+       </footer>
+</body>
+</html>
+{% endblock content1 %}

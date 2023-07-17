@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>E-Shop | {% block title %}Dashboard{% endblock title %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/stocks.css' %}">
+    {% block javascript %}
+    {% endblock javascript %}
+    {% block css %}
+    {% endblock css %}
+</head>
+<body>
+    <header>
+        <a href="#" class="profile"><img class="nav" src="{% static 'images/user.png' %}">{{ gest }}</a>
+        <a href="{% url 'start' %}" class="disc">Deconnexion<img class="nav" src="{% static 'images/logout.png' %}"></a>
+    </header>
+    <div>
+        <nav>
+            <ul>
+             <li><a href=""><img class="nav" src="{% static 'images/accueil.png' %}">Accueil</a></li>
+             <li><a href="{% url 'AllCategoMAG' %}"><img class="nav" src="{% static 'images/categories.png' %}">Catégories</a></li>
+             <li><a href="{% url 'prodMag' %}"><img class="nav" src="{% static 'images/products.png' %}">Produits</a></li>
+             <li><a href="{% url 'stock' %}"><img class="nav" src="{% static 'images/stock.png' %}">Stocks</a></li>
+             <li><a href="#"><img class="nav" src="{% static 'images/about.png' %}">A propos</a></li>
+            </ul>
+        </nav>
+    </div>
+    {% block content1 %}
+		<p id="Dash" style="font-family: 'Curlz MT',sans-serif;align-items: center">Dashboard Magasinier</p>
+    {% endblock content1 %}
+    <br>
+    <footer>
+        <p>&copy; 2023 Site de vente de vêtements</p>
+    </footer>
+</body>
+</html>

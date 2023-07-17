@@ -1,0 +1,30 @@
+{% extends 'DashbordCaissiere.html' %}
+{% load static %}
+{% block content1 %}
+<div class="menu">
+        <div class="nav"><a href="{% url 'dashbordcaisse' %}" class="acc"> Accueil</a>  >  <a href="#" class="prod"> Categorie </a>  > <a href="#" class="prod"> Produits </a>  > </div>
+        <div class="categ">{{nom_de_la_categorie}}</div>
+    </div>
+    <div class="filter">
+        <div class="page">
+            <button class="print">Imprimer</button>
+            <button class="refresh">Rafraîchir</button>
+        </div>
+        <div class="param">
+            <button class="qte">Quantité</button>
+            <button class="fourn">Code de Fournisseur</button>
+            <button class="prod">Code du Produit</button>
+            <a href="#"><img src="{% static 'images/search.png' %}" alt="search"></a>
+        </div>
+    </div>
+    <div class="inv">
+        <div class="prod">
+            <div class="num">555-555</div>
+            <img src="{% static 'images/1672212625751.jpeg' %}" alt="produit">
+            <div class="bottom">
+                <div class="qte">555</div>
+                <img src="{% static 'images/search.png' %}" alt="search">
+            </div>
+        </div>
+    </div>
+{% endblock content1 %}

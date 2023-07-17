@@ -1,0 +1,221 @@
+{% extends 'DashbordCaissiere.html' %}
+{% load static %}
+{% block content1 %}
+    <style>
+ /* Popup */
+    .popup {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+    }
+    #add-button{
+        border: none;
+        background: none;
+    }
+    #add-button :hover{
+        transform: scale(1.1);
+    }
+    .popup-content {
+      background-color: #fefefe;
+      margin: 10% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 500px;
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    label {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    input[type=text] {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      resize: none;
+    }
+    button[type=submit] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 18px;
+      margin-top: 10px;
+    }
+    button[type=button] {
+      background-color: #ec324e;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 18px;
+      margin-top: 10px;
+    }
+    button[type=submit]:hover, button[type=button]:hover {
+      transform: scale(1.1);
+    }
+    .img{
+        width: 10px;
+        height: 10px;
+    }
+    .img:hover{
+        transform: scale(1.3);
+    }
+    .btn{
+        display: inline;
+    }
+    .production{
+    border: whitesmoke solid 10px;
+}
+    .quantity{
+    color: black;
+    font-weight: bold;
+}
+    .production{
+        padding: 30px 30px 30px 30px;
+   display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    font-weight: 600;
+    font-size: 25px;
+    transition: 0.5s;
+}
+.formPara {
+    display: flex;
+}
+
+.formPara input {
+    flex: 1;
+}
+
+.formPara button {
+    flex: 0 0 4em;
+}
+    </style>
+    <!-- Popup -->
+  <div id="popup" class="popup">
+    <div class="popup-content">
+      <span class="close">&times;</span>
+      <h2>Ajouter un nom</h2>
+      <form>
+        <label for="name">Nom :</label>
+        <input type="text" id="name" name="name"><br><br>
+          <div class="btn">
+        <button type="submit" class="add">Ajouter</button>
+        <button type="button" class="cancel">Annuler</button>
+          </div>
+      </form>
+    </div>
+  </div>
+<div class="menu">
+        <div class="nav"><a href="{% url 'facturer' %}" class="acc"> Accueil</a>  >  <a href="{% url 'AllCategoCaisse' %}" class="prod"> Categorie </a>  >  </div>
+        <div class="categ">Toutes les catégories</div>
+</div>
+<div class="filter">
+        <div class="page">
+            <button class="print">Imprimer</button>
+            <button class="refresh">Rafraîchir</button>
+        </div>
+        <div class="formPara">
+            <form method="post">
+                {% csrf_token %}
+            <input class="qte" type="text" placeholder="Quantité">
+            <input type="text" class="fourn" placeholder="Code Arrivage">
+            <input type="text" class="prod" placeholder="Code Produit">
+            <button type="submit"><img src="{% static 'images/search.png' %}" alt="search"></button>
+                </form>
+        </div>
+</div>
+    {% for categorie in page_obj %}
+    <div class="inv">
+        <div class="production">
+            <div class="num">
+                <a href="{% url 'categorie_spe' nomcat=categorie.nomcat %}" class="link"> {{ categorie.nomcat }}</a>
+            </div>
+            -----------------------------------
+            <div class="bottom">
+                <div class="quantity"> {{ categorie.nomcat }} </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; première page</a>
+            <a href="?page={{ page_obj.previous_page_number }}">précédent</a>
+        {% endif %}
+
+        <span class="current-page">
+            Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">suivant</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">dernière page &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+    <script>
+    // Récupération des éléments du DOM
+    const popup = document.getElementById("popup");
+    const addButton = document.getElementById("add-button");
+    const closeButton = document.querySelector(".close");
+    const cancelButton = document.querySelector(".cancel");
+    const form = document.querySelector("form");
+
+    // Fonction pour afficher le popup
+    function showPopup() {
+      popup.style.display = "block";
+    }
+
+    // Fonction pour masquer le popup
+    function hidePopup() {
+      popup.style.display = "none";
+    }
+
+    // Événements pour afficher/masquer le popup
+    addButton.addEventListener("click", showPopup);
+    closeButton.addEventListener("click", hidePopup);
+    cancelButton.addEventListener("click", hidePopup);
+
+    // Événement pour soumettre le formulaire
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+      const name = document.getElementById("name").value;
+      console.log("Nom ajouté : " + name);
+      hidePopup();
+    });
+  </script>
+{% endblock content1 %}

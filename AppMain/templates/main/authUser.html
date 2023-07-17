@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bienvenue Chère Caissière</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/auth.css' %}">
+      <style>
+          body{
+              background-image: url("{% static 'img/magasinier.png' %}");
+              background-size: cover;
+              background-repeat: no-repeat;
+              background-color: rgba(136, 241, 137, 0.77);
+          }
+          .logo {
+  max-width: 100%;
+  max-height: 100%;
+    width: 200px;
+    height: 200px;
+    margin-top: 5px;
+}
+          .container {
+  width: 100%;
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+      </style>
+  </head>
+  <body>
+    <div class="containers">
+        <img src="{% static 'img/eshop.png' %}" alt="Logo" class="logo">
+        <h1>Bienvenue sur E-Shop</h1>
+    </div>
+    <div class="container">
+      <form id="login-form" method="post">
+          {% csrf_token %}
+        <h2>Connexion</h2>
+        <div class="form-group">
+          <img src="{% static 'images/user.png' %}" alt="Nom d'utilisateur">
+          <input type="text" id="username" name="username" placeholder="Nom d'utilisateur" required>
+        </div>
+        <div class="form-group">
+          <img src="{% static 'images/cadenaspng.png' %}" alt="Mot de passe">
+          <input type="password" id="password" name="password" placeholder="Mot de passe" required>
+        </div>
+        <button type="submit">Se connecter</button>
+      </form>
+    </div>
+    <script src="{% static 'js/app.js' %}"></script>
+  </body>
+</html>

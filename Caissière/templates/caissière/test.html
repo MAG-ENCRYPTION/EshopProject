@@ -1,0 +1,217 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boutique Bambino</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .tof{
+            height: 250px;
+            width: auto;
+        }
+        .popup {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+    }
+    .detail-button{
+        border: none;
+        background: none;
+    }
+    .detail-button:hover{
+        transform: scale(1.1);
+    }
+    .popup-content {
+      background-color: #fefefe;
+      margin: 10% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 500px;
+    }
+    .close {
+      align-self: center;
+      width: 30px;
+      height: 30px;
+      color: black;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+      color: whitesmoke;
+      background-color: red;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    label {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    input[type=text] {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      resize: none;
+    }
+    button[type=submit] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 18px;
+      margin-top: 10px;
+    }
+    button[type=button] {
+      background-color: #ec324e;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 18px;
+      margin-top: 10px;
+    }
+    button[type=submit]:hover, button[type=button]:hover {
+      transform: scale(1.1);
+    }
+
+    .btn{
+        display: inline;
+    }
+    #logo{
+        transform: translateX(50%) scale(1);
+        width: 250px;
+        height: 250px;
+    }
+
+    .formPara {
+    display: flex;
+}
+
+.formPara input {
+    flex: 1;
+}
+
+.formPara button {
+    flex: 0 0 4em;
+}
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Récupération des éléments du DOM
+    const popup = document.getElementById("popup");
+    const addButton = document.getElementById("add-button");
+    const closeButton = document.querySelector(".close");
+    const cancelButton = document.querySelector(".cancel");
+    const form = document.querySelector("form");
+
+    // Fonction pour afficher le popup
+    function showPopup() {
+      popup.style.display = "block";
+    }
+
+    // Fonction pour masquer le popup
+    function hidePopup() {
+      popup.style.display = "none";
+    }
+
+    // Événements pour afficher/masquer le popup
+    addButton.addEventListener("click", showPopup);
+    closeButton.addEventListener("click", hidePopup);
+    cancelButton.addEventListener("click", hidePopup);
+
+    // Événement pour soumettre le formulaire
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+      const name = document.getElementById("name").value;
+      console.log("Nom ajouté : " + name);
+      hidePopup();
+    });
+    </script>
+</head>
+<body>
+  <div class="container">
+    <h1>Produits</h1>
+
+    <form method="get">
+      <input type="text" name="query" placeholder="Rechercher par code">
+      <button type="submit">Rechercher</button>
+      <button type="submit" name="order_by" value="qte">Trier par quantité</button>
+    </form>
+
+    <div class="produits-grid">
+      {% for produit in produits %}
+        <div class="produit-card">
+          <img src="http://boutiquebambino.shop/eshop/productImages/{{ produit.codepro }}/{{ produit.photo_set.first.lienphoto }}" alt="{{ produit.nompro }}">
+          <h2>{{ produit.nompro }}</h2>
+          <p>Code: {{ produit.codepro }}</p>
+          <p>Quantité: {{ produit.qte }}</p>
+          <button type="button" class="detail-button">
+            Détails
+          </button>
+
+          <!-- Popup -->
+          <div class="popup">
+            <span class="close">&times;</span>
+            <img id="logo" src="{% static 'img/eshop.png' %}" alt="">
+            <h2><a>Detail du Produit</a></h2>
+            <form method="post">
+                {% csrf_token %}
+              <p><strong>NOM : </strong> {{ produit.nompro }}</p>
+              <p><strong>CODE : </strong> {{ produit.codepro }}</p>
+              <p><strong>QUANTITE : </strong> {{ produit.qte }}</p>
+              <p><strong>PRIX : </strong> {{ produit.prix }}</p>
+              <div class="tof">
+                <img src="http://boutiquebambino.shop/eshop/productImages/{{ produit.codepro }}/{{ produit.photo_set.first.lienphoto }}" alt="{{ produit.nompro }}">
+              </div>
+              <button type="button" class="cancel">Fermer</button>
+            </form>
+          </div>
+
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="pagination">
+      <span class="step-links">
+          {% if produits.has_previous %}
+              <a href="?page=1">&laquo; première</a>
+              <a href="?page={{ produits.previous_page_number }}">précédent</a>
+          {% endif %}
+
+          <span class="current">
+              Page {{ produits.number }} sur {{ produits.paginator.num_pages }}.
+          </span>
+
+          {% if produits.has_next %}
+              <a href="?page={{ produits.next_page_number }}">suivant</a>
+              <a href="?page={{ produits.paginator.num_pages }}">dernière &raquo;</a>
+          {% endif %}
+      </span>
+    </div>
+
+  </div>
+
+</body>
+</html>

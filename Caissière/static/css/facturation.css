@@ -1,0 +1,253 @@
+header {
+    background-color: #333d;
+    color: #fff;
+    padding: 10px;
+    backdrop-filter: blur(7px);
+    box-shadow: 0 .4rem .8rem #0005;
+    border-radius: .8rem;
+   }
+
+nav {
+    text-align:center;
+    vertical-align: bottom;
+   }
+
+nav li {
+    display: inline-block;
+    margin-right: 5%;
+   }
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+   }
+
+.profile{
+    color: #fff;
+    text-decoration: none;
+}
+.disconnect{
+    color: #fff;
+    text-decoration: none;
+    margin-left: calc(100% - 292px);
+}
+containt {
+    margin: 20px;
+    backdrop-filter: blur(7px);
+    background-color: #fff0;
+    border-radius: .8rem;
+}
+
+body {
+    background: linear-gradient(45deg,#54e7a2,#70deaa,#70dedc77,#70abde,#2c75e2);
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    justify-content: center;
+    align-items: center;
+    background-size: 300% 300%;
+    animation: color 12s ease-in-out infinite;
+   }
+
+   * {
+    box-sizing: border-box;
+   }
+
+   #code{
+    padding-inline: 1px;
+    padding-block: 8px;
+    background-color: #fff0;
+    border-top-style:hidden;
+    border-left-style:hidden;
+    border-right-style:hidden;
+    border-width: 1px;
+}
+
+#code:focus-within{
+    border-top-style:hidden;
+    border-left-style:hidden;
+    border-right-style:hidden;
+}
+
+.nav {
+    width: 20px;
+    height: 20px;
+    margin-right: .3rem;
+    margin-bottom: .3rem;
+    vertical-align: middle;
+   }
+   @keyframes color {
+    0%{background-position: 0% 50%;}
+    50%{background-position: 100% 50%;}
+    100%{background-position: 0% 50%;}
+}
+
+form {
+    margin: 10px auto;
+    display:flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-between;
+    align-content: space-around;
+  }
+  input{
+    border-width: 0 0 1px 0;
+    border-color: gray;
+    background-color: inherit;
+    border-style: solid;
+
+  }
+label[for="quantity"]{
+  margin-right: 4rem;
+}
+
+ul{
+  display:flex;
+  flex-flow: row wrap;
+  list-style-type: none;
+  justify-content: space-around;
+  align-content: space-around;
+  align-items: center;
+  margin-bottom:2em;
+}
+.icone{
+    width:30px;
+    height:30px;
+    vertical-align:middle;
+    margin-right: 1em;
+  }
+
+  .col2{
+    display:flex;
+    flex-flow: column wrap;
+    justify-content: space-between;
+    height: 105px;
+  }
+  .col3{
+    display:flex;
+      color: white;
+    flex-flow: column wrap;
+    justify-content: space-between;
+    height: 500px;
+      width: 200px;
+  }
+
+  #stock{
+    border-bottom: none;
+    width: 8rem;
+  }
+
+  main {
+    margin: 10px;
+    backdrop-filter: blur(7px);
+    overflow: auto;
+    background-color: #fff0;
+    border-radius: .8rem;
+   }
+   table {
+    width: 100%;
+    background-color: #ffffff80;
+    border-collapse: collapse;
+    overflow: hidden;
+    backdrop-filter: blur(7px);
+    box-shadow: 0 .4rem .8rem #0005;
+    border-radius: .8rem;
+    justify-content: center;
+    text-align: center;
+   }
+   main::-webkit-scrollbar-thumb{
+    border-radius: .5rem;
+    background-color: #0005;
+    visibility: hidden;
+}
+
+main:hover::-webkit-scrollbar-thumb{
+    visibility: visible;
+}
+
+th, td {
+ padding: 8px;
+}
+
+tr{
+ overflow: auto;
+}
+
+thead th {
+ background-color:#333d;
+ color: #fff;
+ position: sticky;
+ left: 0;
+ top: 0;
+}
+
+tbody tr:nth-child(even){
+    background-color: #a5d5cd63;
+}
+
+tbody tr:hover {
+ background-color: #90d5c9dd;
+}
+
+.nav {
+    width: 20px;
+    height: 20px;
+    margin-right: .3rem;
+    margin-bottom: .3rem;
+    vertical-align: middle;
+   }
+ footer {
+    background-color: #333d;
+    color: #fff;
+    padding: 10px;
+    backdrop-filter: blur(7px);
+    box-shadow: 0 .4rem .8rem #0005;
+    border-radius: .8rem;
+    text-align: center;
+   }
+   section{
+    border-bottom: 2px solid rgb(210, 210, 210);
+  }
+
+  .nd{
+    margin-left: 0.5em;
+    color:green
+  }
+
+  #stock{
+    border-bottom: none;
+    width: 8rem;
+  }
+
+  #montantRemis{
+    width: 8rem;
+  }
+  .section2{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    width:80%;
+  }
+
+.ma{
+  display: flex;
+  justify-content: space-between;
+}
+.ba{
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row wrap;
+}
+.sup{
+  border-color: #f44336;
+  color: red;
+}
+button{
+  background: linear-gradient(45deg,#54e7a2,#70deaa,#70dedc77,#70abde,#2c75e2);
+  border: 0;
+  padding: 20px 20px;
+  border-radius: 20PX;
+  margin-right: 15px;
+}
+.gg{
+  margin-left: 15px;
+}
